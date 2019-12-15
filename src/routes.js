@@ -7,6 +7,7 @@ import SessionController from "./app/controllers/SessionController";
 import authMiddleware from "./app/middlewares/auth";
 import EventController from "./app/controllers/EventController";
 import FileController from "./app/controllers/FileController";
+import ListController from "./app/controllers/ListController";
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -26,4 +27,6 @@ routes.delete("/events/:id", EventController.delete);
 
 routes.post("/files", upload.single("file"), FileController.store);
 
+routes.post("/list/:id_events", ListController.store);
+routes.get("/list", ListController.index);
 export default routes;

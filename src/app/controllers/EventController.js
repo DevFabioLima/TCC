@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import Events from "../models/Event";
+import File from "../models/File";
 
 class EventController {
   async store(req, res) {
@@ -100,6 +101,12 @@ class EventController {
     const { page = 1 } = req.query;
     const events = await Events.findAll({
       attributes: ["name", "attraction", "description", "date", "hours"],
+      include: [
+        {
+          model:File,
+          attributes:['name','path','url']
+        }
+      ],
       limit: 20,
       offset: (page - 1) * 20
     });
