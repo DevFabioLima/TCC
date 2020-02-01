@@ -10,21 +10,22 @@ class Event extends Model {
         attraction: Sequelize.STRING,
         description: Sequelize.STRING,
         date: Sequelize.DATE,
-        hours: Sequelize.TIME,
+        hours: Sequelize.STRING,
         valuepistaf: Sequelize.DECIMAL,
         valuepistam: Sequelize.DECIMAL,
         valuecamarotef: Sequelize.DECIMAL,
-        valuecamarotem: Sequelize.DECIMAL
+        valuecamarotem: Sequelize.DECIMAL,
+        lote: Sequelize.INTEGER,
+        aux: Sequelize.DATE,
       },
       {
         sequelize
       }
-      
     );
     return this;
   }
-  static associate(models){
-    this.belongsTo(models.File,{foreignKey:'avatar_id'})
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: "avatar_id" });
   }
 }
 export default Event;

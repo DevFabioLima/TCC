@@ -13,13 +13,15 @@ class EventController {
       valuepistaf: Yup.number().required(),
       valuepistam: Yup.number().required(),
       valuecamarotef: Yup.number().required(),
-      valuecamarotem: Yup.number().required()
+      valuecamarotem: Yup.number().required(),
+      lote: Yup.number(),
+      aux: Yup.date()
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
     const eventExist = await Events.findOne({
-      where: { attraction: req.body.attraction }
+      where: { attraction: req.body.attraction, date: req.body.date }
     });
     const eventDate = await Events.findOne({
       where: { date: req.body.date }
@@ -30,6 +32,7 @@ class EventController {
     if (eventExist) {
       return res.status(400).json({ error: "Event already exist" });
     }
+
     const {
       id,
       name,
@@ -40,7 +43,9 @@ class EventController {
       valuepistaf,
       valuepistam,
       valuecamarotem,
-      valuecamarotef
+      valuecamarotef,
+      lote,
+      aux
     } = await Events.create(req.body);
     return res.json({
       id,
@@ -52,7 +57,9 @@ class EventController {
       valuepistaf,
       valuepistam,
       valuecamarotem,
-      valuecamarotef
+      valuecamarotef,
+      lote,
+      aux
     });
   }
   async update(req, res) {
@@ -65,10 +72,12 @@ class EventController {
       valuepistaf: Yup.number(),
       valuepistam: Yup.number(),
       valuecamarotef: Yup.number(),
-      valuecamarotem: Yup.number()
+      valuecamarotem: Yup.number(),
+      lote: Yup.number(),
+      aux: Yup.date(),
     });
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: "Validation fails" });
+      return res.status(400).json({ error: "error formulario" });
     }
     const event = await Events.findByPk(req.params.id);
 
@@ -79,32 +88,50 @@ class EventController {
     const {
       name,
       attraction,
+      description,
       date,
       hours,
       valuepistaf,
       valuepistam,
       valuecamarotem,
-      valuecamarotef
+      valuecamarotef,
+      lote,
+      aux,
     } = await event.update(req.body);
     return res.json({
       name,
       attraction,
+      description,
       date,
       hours,
       valuepistaf,
       valuepistam,
       valuecamarotem,
-      valuecamarotef
+      valuecamarotef,
+      lote,
+      aux,
     });
   }
   async index(req, res) {
     const { page = 1 } = req.query;
     const events = await Events.findAll({
-      attributes: ["name", "attraction", "description", "date", "hours"],
+      attributes: [
+        "id",
+        "name",
+        "attraction",
+        "description",
+        "date",
+        "hours",
+        "valuepistaf",
+        "valuepistam",
+        "valuecamarotef",
+        "valuecamarotem",
+        "lote"
+      ],
       include: [
         {
-          model:File,
-          attributes:['name','path','url']
+          model: File,
+          attributes: ["id", "path", "url"]
         }
       ],
       limit: 20,
