@@ -9,6 +9,7 @@ import EventController from "./app/controllers/EventController";
 import FileController from "./app/controllers/FileController";
 import ListController from "./app/controllers/ListController";
 import EventFilterController from "./app/controllers/EventFilterController";
+import EventMonthController from "./app/controllers/EventMonthController";
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -32,4 +33,6 @@ routes.post("/files", upload.single("file"), FileController.store);
 routes.post("/list/:id_events", ListController.store);
 routes.get("/list", ListController.index);
 routes.get("/event-filter/:id", EventFilterController.index);
+routes.get("/event-month", EventMonthController.index);
+
 export default routes;
