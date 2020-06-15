@@ -10,14 +10,15 @@ import FileController from "./app/controllers/FileController";
 import ListController from "./app/controllers/ListController";
 import EventFilterController from "./app/controllers/EventFilterController";
 import EventMonthController from "./app/controllers/EventMonthController";
-
+import FinishOrderController from "./app/controllers/FinishOrderController";
+import OrderController from './app/controllers/OrderController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post("/sessions", SessionController.store);
 routes.get("/events", EventController.index);
 
-routes.use(authMiddleware);
+// routes.use(authMiddleware);
 routes.get("/users", UserController.index);
 routes.post("/users", UserController.store);
 routes.put("/users", UserController.update);
@@ -34,5 +35,10 @@ routes.post("/list/:id_events", ListController.store);
 routes.get("/list", ListController.index);
 routes.get("/event-filter/:id", EventFilterController.index);
 routes.get("/event-month", EventMonthController.index);
+
+// finishOrder
+routes.post("/orders", FinishOrderController.finishOrder);
+routes.get("/orders/users/:userId/events/:eventId", OrderController.getPayed);
+routes.post("/orders/users/:userId/events/:eventId", OrderController.payOrder); 
 
 export default routes;

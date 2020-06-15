@@ -1,4 +1,4 @@
-module.exports = {
+"use strict";module.exports = {
   dialect: 'mysql',
   host: 'mysql669.umbler.com',
   username: 'tianena',

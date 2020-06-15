@@ -1,7 +1,6 @@
-
-module.exports = {
+"use strict";module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('lists', {
+    return queryInterface.createTable('files', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -12,12 +11,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cpf: {
+      path: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: false,
+        unique: true,
       },
-     
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -30,6 +28,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('lists');
+    return queryInterface.dropTable('files');
   },
 };
